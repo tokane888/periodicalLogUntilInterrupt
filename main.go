@@ -1,31 +1,37 @@
 package main
 
 import (
-  "fmt"
-  "log"
-  "os"
-  "os/signal"
-  "time"
+	"fmt"
+	"log"
+	"os"
+	"os/signal"
+	"time"
 )
 
-func main() {
-  quit := make(chan os.Signal)
-  signal.Notify(quit, os.Interrupt)
+func getCurrentTime() string {
+	return time.Now().Format("2020-01-01")
+}
 
-  ticker := time.NewTicker(10 * time.Second)
-  for {
-    select {
-      case <-ticker.C:
-        // ログファイル作成または追記
-        file, err := os.OpenFile("/tmp/test.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
-        if err != nil {
-          log.Fatal("failed to open file")
-          return
-        }
-        fmt.Fprintln(file, time.Now())
-        file.Close()
-      case <-quit:
-        return
-    }
-  }
+func main() {
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
+
+	// ログファイル作成または追記
+	file, err := os.OpenFile("/tmp/test.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+	fmt.Fprintf(file, "%v %s\n", getCurrentTime(), "start")
+	if err != nil {
+		log.Fatal("failed to open file")
+		return
+	}
+	ticker := time.NewTicker(10 * time.Second)
+	for {
+		select {
+		case <-ticker.C:
+			fmt.Fprintln(file, getCurrentTime())
+		case <-quit:
+			fmt.Fprintf(file, "%v %s\n", getCurrentTime(), "end")
+			file.Close()
+			return
+		}
+	}
 }
