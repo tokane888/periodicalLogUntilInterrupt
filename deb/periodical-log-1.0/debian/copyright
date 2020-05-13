@@ -1,0 +1,7 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: periodical-log
+Source: http://www.dummypage.com
+
+Files: *
+Copyright: 2020 okaneya <test@gmail.com>
+License: GPL-2+

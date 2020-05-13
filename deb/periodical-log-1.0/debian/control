@@ -1,0 +1,14 @@
+Source: periodical-log
+Section: utils
+Priority: optional
+Maintainer: Ubuntu <test@gmail.com>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.1.2
+Homepage: http://www.dummypage.com
+#Vcs-Git: https://anonscm.debian.org/git/collab-maint/periodical-log.git
+#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/periodical-log.git
+
+Package: periodical-log
+Architecture: amd64
+Description: Output time periodically to log file under /tmp .
+ Output time periodically to log file under /tmp .
